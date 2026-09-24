@@ -1,0 +1,5 @@
+---
+import '../styles/global.css';
+const { title = "Johnny's Carpet & Flooring | Yuma, Arizona", description = "Family-owned flooring in Yuma since 1976. Carpet, luxury vinyl, laminate and professional installation." } = Astro.props;
+---
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title}</title></head><body><slot /></body></html>

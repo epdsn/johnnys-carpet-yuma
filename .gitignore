@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Astro output and generated types
+dist/
+.astro/
+
+# Test output and caches
+coverage/
+.cache/
+.vite/
+*.tsbuildinfo
+
+# Local environment files (keep shareable templates)
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Logs
+*.log
+
+# OS and editor temporary files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
