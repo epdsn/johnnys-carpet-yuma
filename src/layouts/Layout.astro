@@ -2,4 +2,25 @@
 import '../styles/global.css';
 const { title = "Johnny's Carpet & Flooring | Yuma, Arizona", description = "Family-owned flooring in Yuma since 1976. Carpet, luxury vinyl, laminate and professional installation." } = Astro.props;
 ---
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title}</title></head><body><slot /></body></html>
+<!doctype html><html lang="en"><head>
+<!-- Google Analytics -->
+<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-Y8KK2CTSM9"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Y8KK2CTSM9');
+  document.addEventListener('click', function(event) {
+    const link = event.target instanceof Element ? event.target.closest('a[href^="tel:"]') : null;
+    if (!link) return;
+    gtag('event', 'phone_click', {
+      link_url: link.getAttribute('href'),
+      link_text: link.textContent.trim(),
+      transport_type: 'beacon'
+    });
+  });
+</script>
+
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title}</title></head><body>
+
+<slot /></body></html>
