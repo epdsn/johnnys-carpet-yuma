@@ -1,0 +1,30 @@
+---
+const photos = [
+  { name: 'flooring-sample-displays', title: 'Find your finish', description: 'Explore flooring colors, patterns and textures.', alt: 'Flooring samples arranged on displays in the showroom' },
+  { name: 'carpet-roll-selection', title: 'Comfort starts here', description: 'Carpet options for a home that feels like yours.', alt: 'Rows of carpet rolls with product labels' },
+  { name: 'wood-look-flooring-displays', title: 'Looks for everyday living', description: 'Compare wood-look flooring styles in person.', alt: 'Wood-look flooring sample boards in a range of finishes' },
+  { name: 'carpet-showroom', title: 'Plenty to explore', description: 'Discover our carpet selection in the showroom.', alt: 'Wide view of carpet inventory inside the showroom' },
+  { name: 'flooring-sample-selection', title: 'See the possibilities', description: 'Find a style that suits your space and budget.', alt: 'Flooring sample displays along a carpeted showroom aisle' },
+  { name: 'flooring-display-collection', title: 'Your next floor awaits', description: 'Local advice to help you choose with confidence.', alt: 'Collection of flooring sample stands in the showroom' },
+];
+---
+<section id="gallery" class="mx-auto max-w-7xl px-6 pb-24 scroll-mt-6" aria-labelledby="gallery-title">
+  <div class="mb-10 flex flex-wrap items-end justify-between gap-6">
+    <div class="max-w-2xl">
+      <p class="font-bold uppercase tracking-widest text-amber-700">Inside Johnny's</p>
+      <h2 id="gallery-title" class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Local floors. Lots of possibilities.</h2>
+      <p class="mt-5 text-lg leading-8 text-stone-600">Take a look around our Yuma showroom. From comfortable carpet to wood-look flooring, we'll help you find the right fit for your home and your budget.</p>
+    </div>
+    <a href="tel:+19287834619" class="rounded-full bg-stone-950 px-6 py-3 font-bold text-white">Talk about your project →</a>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {photos.map(photo => (
+      <figure class="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+        <a href={`/images/${photo.name}-1536.webp`} target="_blank" rel="noopener" class="group block focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-[-4px] focus-visible:outline-amber-600" aria-label={`View larger photo: ${photo.title} (opens in a new tab)`}>
+          <img src={`/images/${photo.name}-640.webp`} srcset={`/images/${photo.name}-640.webp 640w, /images/${photo.name}-1024.webp 1024w, /images/${photo.name}-1536.webp 1536w`} sizes="(min-width: 1280px) 390px, (min-width: 1024px) 31vw, (min-width: 640px) 46vw, 100vw" width="1536" height="1024" loading="lazy" decoding="async" alt={photo.alt} class="aspect-[3/2] w-full object-cover transition-transform duration-300 motion-safe:group-hover:scale-105" />
+        </a>
+        <figcaption class="p-6"><h3 class="text-xl font-bold">{photo.title}</h3><p class="mt-2 leading-7 text-stone-600">{photo.description}</p></figcaption>
+      </figure>
+    ))}
+  </div>
+</section>
