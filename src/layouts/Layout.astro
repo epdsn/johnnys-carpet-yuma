@@ -1,8 +1,16 @@
 ---
 import '../styles/global.css';
 const { title = "Johnny's Carpet & Flooring | Yuma, Arizona", description = "Family-owned flooring in Yuma since 1976. Carpet, luxury vinyl, laminate and professional installation." } = Astro.props;
+const canonical = new URL(Astro.url.pathname, 'https://johnnyscarpet.com').href;
+const business = {
+  '@context': 'https://schema.org', '@type': 'Organization',
+  name: "Johnny's Carpet & Flooring", url: 'https://johnnyscarpet.com/',
+  telephone: '+1-928-783-5085', foundingDate: '1976',
+  description, areaServed: { '@type': 'City', name: 'Yuma, Arizona' },
+  sameAs: ['https://www.facebook.com/JohnnysCarpetAZ/', 'https://www.instagram.com/johnnys_carpet/']
+};
 ---
-<!doctype html><html lang="en"><head>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/>
 <!-- Google Analytics -->
 <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-Y8KK2CTSM9"></script>
 <script is:inline>
@@ -12,15 +20,34 @@ const { title = "Johnny's Carpet & Flooring | Yuma, Arizona", description = "Fam
   gtag('config', 'G-Y8KK2CTSM9');
   document.addEventListener('click', function(event) {
     const link = event.target instanceof Element ? event.target.closest('a[href^="tel:"]') : null;
-    if (!link) return;
+    if (!link) {
+      const social = event.target instanceof Element ? event.target.closest('a[href]') : null;
+      if (social) {
+        const url = new URL(social.href);
+        const network = url.hostname === 'www.facebook.com' ? 'facebook' : url.hostname === 'www.instagram.com' ? 'instagram' : null;
+        if (network) gtag('event', 'social_click', { social_network: network, link_url: social.href, transport_type: 'beacon' });
+      }
+      return;
+    }
     gtag('event', 'phone_click', {
       link_url: link.getAttribute('href'),
       link_text: link.textContent.trim(),
+      button_location: link.closest('header') ? 'header' : link.closest('#gallery') ? 'gallery' : 'contact',
       transport_type: 'beacon'
     });
   });
 </script>
 
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title}</title></head><body>
+<link rel="canonical" href={canonical}/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Johnny's Carpet & Flooring"/>
+<meta property="og:title" content={title}/>
+<meta property="og:description" content={description}/>
+<meta property="og:url" content={canonical}/>
+<meta property="og:image" content="https://johnnyscarpet.com/images/yuma-flooring-showroom-1536.webp"/>
+<meta property="og:image:alt" content="Flooring displays inside Johnny's Yuma showroom"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(business).replace(/</g, '\\u003c')} />
+<meta name="viewport" content="width=device-width"/><meta name="description" content={description}/><title>{title}</title></head><body>
 
 <slot /></body></html>
